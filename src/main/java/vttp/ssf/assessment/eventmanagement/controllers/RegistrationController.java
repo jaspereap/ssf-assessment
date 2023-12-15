@@ -61,16 +61,14 @@ public class RegistrationController {
         }
 
         if (!dataSvc.validAge(registration.getDob())) {
-            FieldError err = new FieldError("registration", "dob", "Must be 21 or older!");
-            result.addError(err);
             mav.setStatus(HttpStatus.BAD_REQUEST);
-            mav.setViewName("eventregister");
+            mav.addObject("message", "Must be 21 or older!");
+            mav.setViewName("ErrorRegistration");
 
             return mav;
         }
 
         if (!dataSvc.validParticipants(eventId, registration.getTickets())) {
-            System.out.println("Failed to get tickets, exceed event size");
             mav.setStatus(HttpStatus.BAD_REQUEST);
             mav.addObject("message", "Your request for tickets exceeded the event size.");
             mav.setViewName("ErrorRegistration");
