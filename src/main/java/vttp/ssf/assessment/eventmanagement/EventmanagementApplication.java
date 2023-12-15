@@ -50,12 +50,12 @@ public class EventmanagementApplication implements CommandLineRunner {
 		}
 
 		// Test Task 3
-		System.out.println("\tTesting task 3");
+		System.out.println("\tTesting Task 3");
 		Integer totalEvents = redisRepo.getNumberOfEvents();
 		System.out.println(totalEvents);
 
 		// Test Task 4
-		System.out.println("\tTesting task 4 - Get eventId = 3:");
+		System.out.println("\tTesting Task 4 - Get eventId = 3:");
 		Event event3 = redisRepo.getEvent(3);
 		System.out.println(event3);
 	}

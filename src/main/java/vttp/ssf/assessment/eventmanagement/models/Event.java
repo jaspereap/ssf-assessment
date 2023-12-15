@@ -17,6 +17,7 @@ public class Event {
     private Integer participants;
 
     
+    
     public JsonObject toJson() {
         return Json.createObjectBuilder()
         .add("eventId", this.eventId)

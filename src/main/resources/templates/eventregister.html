@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register for event</title>
+</head>
+<body>
+    <h1>Register event</h1>
+    <h4>You have chosen to register for the following event:</h4>
+    <div th:text="${event.getEventName}"></div>
+    <div th:text="${#dates.format(event.getEventDate, 'dd-MM-yyyy')}"></div>
+
+    <form action="" method="post">
+        <table>
+            <tr><td>Full Name</td></tr>
+            <tr><td><input type="text" name="name" id=""></td></tr>
+            <tr><td>DOB</td></tr>
+            <tr><td><input type="date" name="dob" id=""></td></tr>
+            <tr><td>Email</td></tr>
+            <tr><td><input type="text" name="email" id=""></td></tr>
+            <tr><td>Mobile No</td></tr>
+            <tr><td><input type="text" name="mobile" id=""></td></tr>
+            <tr><td>Gender</td></tr>
+            <tr><td><input type="text" name="gender" id=""></td></tr>
+            <tr><td>Number of Tickets</td></tr>
+            <tr><td><input type="text" name="tickets" id=""></td></tr>
+        </table>
+    </form>
+</body>
+</html>
