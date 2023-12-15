@@ -22,8 +22,8 @@ import vttp.ssf.assessment.eventmanagement.repositories.RedisRepository;
 public class DatabaseService {
     @Autowired
     private RedisRepository redisRepo;
-    // TODO: Task 1
 
+    // TODO: Task 1
     public List<Event> readFile(String fileName) {
         List<Event> eventList = new ArrayList<>();
         try (JsonReader reader = Json.createReader(new FileReader(fileName))) {
@@ -69,7 +69,9 @@ public class DatabaseService {
 
     public boolean validParticipants(String eventId, Integer tickets) {
         Event event = getRecord(eventId);
- 
+        Integer participants = event.getParticipants();
+        Integer eventSize = event.getEventSize();
+        // System.out.printf("Participants: %d, Event Size: %d\n", participants, eventSize);
         if (event.getParticipants() + tickets <= event.getEventSize()) {
             return true;
         }
@@ -80,6 +82,7 @@ public class DatabaseService {
         Event event = getRecord(eventId);
         Integer currParticipants = event.getParticipants();
         event.setParticipants(currParticipants + tickets);
-        saveRecord(event);
+        // saveRecord(event);
+        redisRepo.updateRecord(event.getEventId(), event);
     }
 }

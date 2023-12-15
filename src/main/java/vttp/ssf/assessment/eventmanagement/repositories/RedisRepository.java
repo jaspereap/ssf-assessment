@@ -1,7 +1,6 @@
 package vttp.ssf.assessment.eventmanagement.repositories;
 
 import java.io.StringReader;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,21 +19,24 @@ public class RedisRepository {
 
 	// TODO: Task 2
 	public void saveRecord(Event event) {
-		Integer eventId = event.getEventId();
+		// Integer eventId = event.getEventId();
 		JsonObject body = event.toJson();
 
-		template.opsForValue().set(eventId.toString(), body.toString());
+		// template.opsForValue().set(eventId.toString(), body.toString());
+		template.opsForList().rightPush("events", body.toString());
 	}
 
 	// TODO: Task 3
-	public Integer getNumberOfEvents() {
-		Set<String> keys = template.keys("*");
-		return keys.size();
+	public Long getNumberOfEvents() {
+		// Set<String> keys = template.keys("*");
+		// return keys.size();
+		return template.opsForList().size("events");
 	}
 
 	// TODO: Task 4
 	public Event getEvent(Integer key) {
-		String result = template.opsForValue().get(key.toString());
+		// String result = template.opsForValue().get(key.toString());
+		String result = template.opsForList().index("events", key - 1);
 		JsonReader reader = Json.createReader(new StringReader(result));
 		JsonObject object = reader.readObject();
 
@@ -45,5 +47,9 @@ public class RedisRepository {
 		Integer participants = object.getInt("participants");
 
 		return new Event(eventid, eventName, eventSize, eventDate, participants);
+	}
+
+	public void updateRecord(Integer index, Event event) {
+		template.opsForList().set("events", index - 1, event.toJson().toString());
 	}
 }
