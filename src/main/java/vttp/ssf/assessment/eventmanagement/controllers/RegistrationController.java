@@ -1,15 +1,21 @@
 package vttp.ssf.assessment.eventmanagement.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.validation.Valid;
 import vttp.ssf.assessment.eventmanagement.models.Event;
 import vttp.ssf.assessment.eventmanagement.models.Registration;
 import vttp.ssf.assessment.eventmanagement.services.DatabaseService;
@@ -25,15 +31,26 @@ public class RegistrationController {
 	public String getRegisteration(@PathVariable String eventId, Model model) {
         Event retrievedEvent = dataSvc.getRecord(eventId);
         model.addAttribute("event", retrievedEvent);
-
         model.addAttribute("registration", new Registration());
 		return "eventregister";
-	}
+    }
 
     // TODO: Task 7
     @PostMapping(path = "/registration/register")
-    public String processRegistration() {
+    public ModelAndView processRegistration(@Valid @ModelAttribute Registration registration, BindingResult result, @RequestBody MultiValueMap<String, String> form) {
+        String eventId = form.getFirst("eventId");
+        System.out.println("Event Id is: " + eventId);
+        Event retrievedEvent = dataSvc.getRecord(eventId);
 
-        return "SuccessRegistration";
+        ModelAndView mav = new ModelAndView();
+        if (result.hasErrors()) {
+            mav.setStatus(HttpStatus.BAD_REQUEST);
+            mav.setViewName("eventregister");
+            mav.addObject("event", retrievedEvent);
+            return mav;
+        }
+        mav.setStatus(HttpStatus.ACCEPTED);
+        mav.setViewName("SuccessRegistration");
+        return mav;
     }
 }

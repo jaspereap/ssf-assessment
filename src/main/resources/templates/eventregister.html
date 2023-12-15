@@ -15,7 +15,9 @@
         <div th:text="${#dates.format(event.getEventDate, 'dd-MM-yyyy')}"></div>
     </div>
 
-    <form data-th-object="${registration}" method="POST">
+    <form data-th-object="${registration}" method="POST" th:action="@{/registration/register}">
+        <input type="text" th:value="${event.eventId}" name="eventId" hidden>
+        <br>
         <table>
             <tr>
                 <td>Full Name</td>
