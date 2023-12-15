@@ -15,8 +15,6 @@ public class Event {
     private Integer eventSize;
     private Long eventDate;
     private Integer participants;
-
-    
     
     public JsonObject toJson() {
         return Json.createObjectBuilder()

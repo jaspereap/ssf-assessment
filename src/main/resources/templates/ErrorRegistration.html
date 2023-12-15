@@ -6,6 +6,11 @@
     <title>Error</title>
 </head>
 <body>
+    <h1>Error</h1>
+    <h5>You didn't manage to register for the following reason:</h5>
+    <h5 th:text="${message}"></h5>
     
+    <br>
+    <a th:href="@{/events/listing}">Back to Event Listing</a>
 </body>
 </html>

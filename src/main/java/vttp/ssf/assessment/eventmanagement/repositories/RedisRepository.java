@@ -33,8 +33,8 @@ public class RedisRepository {
 	}
 
 	// TODO: Task 4
-	public Event getEvent(Integer index) {
-		String result = template.opsForValue().get(index.toString());
+	public Event getEvent(Integer key) {
+		String result = template.opsForValue().get(key.toString());
 		JsonReader reader = Json.createReader(new StringReader(result));
 		JsonObject object = reader.readObject();
 

@@ -24,11 +24,8 @@ public class EventmanagementApplication implements CommandLineRunner {
 	@Value("${spring.redis.port}")
 	String redisPort;
 
-
 	@Autowired
 	DatabaseService dataSvc;
-	@Autowired
-	RedisRepository redisRepo;
 
 
 	public static void main(String[] args) {
@@ -45,19 +42,9 @@ public class EventmanagementApplication implements CommandLineRunner {
 		List<Event> events = dataSvc.readFile("events.json");
 
 		for (Event event : events) {
-			System.out.println(event.toJson());
 			dataSvc.saveRecord(event);
 		}
 
-		// Test Task 3
-		System.out.println("\tTesting Task 3");
-		Integer totalEvents = redisRepo.getNumberOfEvents();
-		System.out.println(totalEvents);
-
-		// Test Task 4
-		System.out.println("\tTesting Task 4 - Get eventId = 3:");
-		Event event3 = redisRepo.getEvent(3);
-		System.out.println(event3);
 	}
 	
 

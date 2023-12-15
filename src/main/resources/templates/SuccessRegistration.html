@@ -6,6 +6,12 @@
     <title>Success</title>
 </head>
 <body>
-    
+    <h1>Success</h1>
+    <h5>You have successfully registered for the event:</h5>
+    <h5 th:text="${event.eventName}"></h5>
+    <h5 th:text="${#dates.format(event.eventDate, 'dd-MM-yyyy')}"></h5>
+
+    <br>
+    <a th:href="@{/events/listing}">Back to Event Listing</a>
 </body>
 </html>

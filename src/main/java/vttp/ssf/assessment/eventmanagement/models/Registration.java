@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,8 +31,10 @@ public class Registration {
     @Size(max=8, message = "Must have 8 digits!")
     private String mobile;
 
+    @NotNull(message = "Must include number of ticket(s)!")
     @Min(value=1, message = "Must request at least 1 ticket!")
     @Max(value=3, message = "Maximum of 3 tickets!")
     private Integer tickets;
+
     private String gender;
 }

@@ -1,8 +1,8 @@
 package vttp.ssf.assessment.eventmanagement.services;
 
 import java.io.FileReader;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +48,30 @@ public class DatabaseService {
 
     public Event getRecord(String eventId) {
         return redisRepo.getEvent(Integer.parseInt(eventId));
+    }
+
+    public boolean validAge(LocalDate dob) {
+        // Calculate age
+        Integer age = LocalDate.now().getYear() - dob.getYear();
+        if (age >= 21) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean validParticipants(String eventId, Integer tickets) {
+        Event event = getRecord(eventId);
+ 
+        if (event.getParticipants() + tickets <= event.getEventSize()) {
+            return true;
+        }
+        return false;
+    }
+
+    public void incrParticipantsBy(String eventId, Integer tickets) {
+        Event event = getRecord(eventId);
+        Integer currParticipants = event.getParticipants();
+        event.setParticipants(currParticipants + tickets);
+        saveRecord(event);
     }
 }
