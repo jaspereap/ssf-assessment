@@ -16,20 +16,11 @@
             <td>Action</td>
         </tr>
         <tr th:each="e : ${eventList}">
-            <form th:action="@{/events/register}" method="post" th:object="${e}">
-                <input type="text" name="eventId" th:value="${e.getEventId}" hidden>
-                <input type="text" name="eventName" th:value="${e.getEventName}" hidden>
-                <input type="text" name="eventSize" th:value="${e.getEventSize}" hidden>
-                <input type="text" name="eventDate" th:value="${e.getEventDate}" hidden>
-                <input type="text" name="participants" th:value="${e.getParticipants}" hidden>
                 <td th:text="${e.getEventId}"></td>
                 <td th:text="${e.getEventName}"></td>
                 <td th:text="${e.getEventSize}"></td>
                 <td th:text="${#dates.format(e.getEventDate, 'dd-MM-yyyy')}"></td>
-                <td>
-                    <button type="submit">Register</button>
-                </td>
-            </form>
+                <td><a th:href="@{/events/register/{eventId}(eventId=${e.getEventId})}">Register</a></td>
         </tr>
     </table>
 </body>

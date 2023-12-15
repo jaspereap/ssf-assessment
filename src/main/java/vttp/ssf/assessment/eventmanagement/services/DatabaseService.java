@@ -45,4 +45,8 @@ public class DatabaseService {
     public void saveRecord(Event event) {
         redisRepo.saveRecord(event);
     }
+
+    public Event getRecord(String eventId) {
+        return redisRepo.getEvent(Integer.parseInt(eventId));
+    }
 }
