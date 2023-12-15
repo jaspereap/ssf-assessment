@@ -50,6 +50,14 @@ public class DatabaseService {
         return redisRepo.getEvent(Integer.parseInt(eventId));
     }
 
+    public boolean validMobile(String mobile) {
+        String startDigit = mobile.substring(0, 1);
+        if ("8".equals(startDigit) | "9".equals(startDigit)) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean validAge(LocalDate dob) {
         // Calculate age
         Integer age = LocalDate.now().getYear() - dob.getYear();

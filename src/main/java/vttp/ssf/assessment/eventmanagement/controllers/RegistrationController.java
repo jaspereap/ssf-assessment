@@ -41,12 +41,22 @@ public class RegistrationController {
         String eventId = form.getFirst("eventId");
         // System.out.println("Event Id is: " + eventId);
         Event retrievedEvent = dataSvc.getRecord(eventId);
-
         ModelAndView mav = new ModelAndView();
+        mav.addObject("event", retrievedEvent);
+
         if (result.hasErrors()) {
             mav.setStatus(HttpStatus.BAD_REQUEST);
             mav.setViewName("eventregister");
-            mav.addObject("event", retrievedEvent);
+            
+            return mav;
+        }
+
+        if (!dataSvc.validMobile(registration.getMobile())) {
+            FieldError err = new FieldError("registration", "mobile", "Must start with 8 or 9!");
+            result.addError(err);
+            mav.setStatus(HttpStatus.BAD_REQUEST);
+            mav.setViewName("eventregister");
+
             return mav;
         }
 
@@ -54,8 +64,8 @@ public class RegistrationController {
             FieldError err = new FieldError("registration", "dob", "Must be 21 or older!");
             result.addError(err);
             mav.setStatus(HttpStatus.BAD_REQUEST);
-            mav.addObject("event", retrievedEvent);
             mav.setViewName("eventregister");
+
             return mav;
         }
 
@@ -64,13 +74,14 @@ public class RegistrationController {
             mav.setStatus(HttpStatus.BAD_REQUEST);
             mav.addObject("message", "Your request for tickets exceeded the event size.");
             mav.setViewName("ErrorRegistration");
+
             return mav;
         }
 
         dataSvc.incrParticipantsBy(eventId, registration.getTickets());
         mav.setStatus(HttpStatus.ACCEPTED);
-        mav.addObject("event", retrievedEvent);
         mav.setViewName("SuccessRegistration");
+        
         return mav;
     }
 }

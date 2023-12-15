@@ -38,9 +38,9 @@ public class EventmanagementApplication implements CommandLineRunner {
 		System.out.printf("\tRedis running on %s@%s\n", redisHost, redisPort);
 		System.out.println("\tRedis template instance: " + template);
 
-		System.out.println("\tTesting Task 1");
+		System.out.println("Reading events.json....");
 		List<Event> events = dataSvc.readFile("events.json");
-
+		System.out.println("Saving events to redis....");
 		for (Event event : events) {
 			dataSvc.saveRecord(event);
 		}

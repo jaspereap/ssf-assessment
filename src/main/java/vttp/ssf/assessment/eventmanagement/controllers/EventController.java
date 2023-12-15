@@ -21,7 +21,6 @@ public class EventController {
 	@GetMapping(path = "/events/listing")
 	public String displayEvents(Model model) {
 		List<Event> eventList = dataSvc.readFile("events.json");
-		System.out.println("Event List from controller: " + eventList);
 		model.addAttribute("eventList", eventList);
 		return "listing";
 	}
