@@ -1,6 +1,5 @@
 package vttp.ssf.assessment.eventmanagement.controllers;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

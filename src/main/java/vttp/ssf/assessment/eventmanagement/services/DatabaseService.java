@@ -8,8 +8,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
@@ -69,9 +67,6 @@ public class DatabaseService {
 
     public boolean validParticipants(String eventId, Integer tickets) {
         Event event = getRecord(eventId);
-        Integer participants = event.getParticipants();
-        Integer eventSize = event.getEventSize();
-        // System.out.printf("Participants: %d, Event Size: %d\n", participants, eventSize);
         if (event.getParticipants() + tickets <= event.getEventSize()) {
             return true;
         }
