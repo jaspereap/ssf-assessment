@@ -39,7 +39,9 @@ public class DatabaseService {
         } catch (Exception e) {}
         return eventList;
     }
-
+    public Long getNumberOfEvents() {
+        return redisRepo.getNumberOfEvents();
+    }
     public void saveRecord(Event event) {
         redisRepo.saveRecord(event);
     }

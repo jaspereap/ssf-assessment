@@ -1,5 +1,6 @@
 package vttp.ssf.assessment.eventmanagement.controllers;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,11 @@ public class EventController {
 	//TODO: Task 5
 	@GetMapping(path = "/events/listing")
 	public String displayEvents(Model model) {
-		List<Event> eventList = dataSvc.readFile("events.json");
-		// List<Event> eventList = new LinkedList<>();
-
+		// List<Event> eventList = dataSvc.readFile("events.json");
+		List<Event> eventList = new LinkedList<>();
+		for (int i = 0; i < dataSvc.getNumberOfEvents(); i ++) {
+			eventList.add(dataSvc.getRecord(String.valueOf(i)));
+		}
 		model.addAttribute("eventList", eventList);
 		return "listing";
 	}
